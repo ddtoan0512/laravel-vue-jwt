@@ -42,23 +42,22 @@ export default {
   computed: {
     currentUser() {
       return this.$store.getters.currentUser;
+    },
+    customers() {
+      return this.$store.getters.customers;
     }
   },
   created() {
-    // axios
-    //   .get(`/api/customer/${this.$route.params.id}`)
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
-    axios
-      .get(`/api/customers/${this.$route.params.id}`, {
-        headers: {
-          Authorization: `Bearer ${this.currentUser.token}`
-        }
-      })
-      .then(res => {
+    if (this.customers.length) {
+      this.customer = this.customers.find(
+        customer => customer.id == this.$route.params.id
+      );
+    } else {
+      axios.get(`/api/customers/${this.$route.params.id}`).then(res => {
         // console.log(res.data.customer);
         this.customer = res.data.customer;
       });
+    }
   }
 };
 </script>

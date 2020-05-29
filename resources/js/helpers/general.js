@@ -19,6 +19,8 @@ export default function initialize(store, router) {
       router.push('/login');
     }
 
-  return Promise.reject(error);
+    return Promise.reject(error);
   });
+
+  axios.defaults.headers.common["Authorization"] = `Bearer ${store.getters.currentUser.token}`;
 }

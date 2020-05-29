@@ -2177,6 +2177,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "list",
   mounted: function mounted() {
+    if (this.customers.length) {
+      return;
+    }
+
     this.$store.dispatch("getCustomers");
   },
   computed: {
@@ -2331,11 +2335,7 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      axios.post("/api/customers/new", this.$data.customer, {
-        headers: {
-          Authorization: "Bearer ".concat(this.currentUser.token)
-        }
-      }).then(function (res) {
+      axios.post("/api/customers/new", this.$data.customer).then(function (res) {
         _this.$router.push("/customers");
       });
     },
@@ -2423,23 +2423,24 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
+    },
+    customers: function customers() {
+      return this.$store.getters.customers;
     }
   },
   created: function created() {
     var _this = this;
 
-    // axios
-    //   .get(`/api/customer/${this.$route.params.id}`)
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err));
-    axios.get("/api/customers/".concat(this.$route.params.id), {
-      headers: {
-        Authorization: "Bearer ".concat(this.currentUser.token)
-      }
-    }).then(function (res) {
-      // console.log(res.data.customer);
-      _this.customer = res.data.customer;
-    });
+    if (this.customers.length) {
+      this.customer = this.customers.find(function (customer) {
+        return customer.id == _this.$route.params.id;
+      });
+    } else {
+      axios.get("/api/customers/".concat(this.$route.params.id)).then(function (res) {
+        // console.log(res.data.customer);
+        _this.customer = res.data.customer;
+      });
+    }
   }
 });
 
@@ -57908,6 +57909,7 @@ function initialize(store, router) {
 
     return Promise.reject(error);
   });
+  axios.defaults.headers.common["Authorization"] = "Bearer ".concat(store.getters.currentUser.token);
 }
 
 /***/ }),
@@ -58032,11 +58034,7 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
       context.commit("login");
     },
     getCustomers: function getCustomers(context) {
-      axios.get('/api/customers', {
-        headers: {
-          "Authorization": "Bearer ".concat(context.state.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.get('/api/customers').then(function (response) {
         context.commit('updateCustomers', response.data.customers);
       });
     }
