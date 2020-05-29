@@ -5,7 +5,7 @@ export function login(credentials) {
         res(response.data);
       })
       .catch(error => {
-        rej('wron email or password');
+        rej('Wrong email or password');
       })
   })
 }

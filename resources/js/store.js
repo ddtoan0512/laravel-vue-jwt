@@ -21,7 +21,7 @@ export default {
       return state.currentUser;
     },
     authError(state) {
-      return state.authError;
+      return state.auth_error;
     },
     customers(state) {
       return state.customers;
@@ -36,14 +36,13 @@ export default {
       state.auth_error = null;
       state.isLoggedIn = true;
       state.loading = false;
-      console.log(payload);
       state.currentUser = Object.assign({}, payload.user, { token: payload.access_token });
 
       localStorage.setItem("user", JSON.stringify(state.currentUser));
     },
     loginFailed(state, payload) {
       state.loading = false
-      state.auth_error = payload.error;
+      state.auth_error = payload.err;
     },
     logout(state) {
       localStorage.removeItem("user");
