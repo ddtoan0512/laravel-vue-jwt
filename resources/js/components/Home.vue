@@ -6,7 +6,7 @@
           <div class="card-header">VueJs SPA example</div>
 
           <div class="card-body">
-            <h2>{{welcome}}</h2>
+            <h2>Hee</h2>
           </div>
         </div>
       </div>
