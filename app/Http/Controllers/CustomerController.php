@@ -19,7 +19,7 @@ class CustomerController extends Controller
     public function get($id)
     {
         $customer = Customer::whereId($id)->first();
-
+        // dd($customer);
         return response()->json([
             "customer" => $customer
         ], 200);

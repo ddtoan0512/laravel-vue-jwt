@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="btn-wrapper">
-      <router-link to="/cutomers/new" class="btn btn-primary btn-sm">New</router-link>
+      <router-link to="customers/new" class="btn btn-primary btn-sm">New</router-link>
     </div>
     <table class="table">
       <thead>
@@ -22,7 +22,7 @@
             <td>{{ customer.email }}</td>
             <td>{{ customer.phone }}</td>
             <td>
-              <router-link :to="`/customer/${customer.id}`">View</router-link>
+              <router-link :to="`/customers/${customer.id}`">View</router-link>
             </td>
           </tr>
         </template>

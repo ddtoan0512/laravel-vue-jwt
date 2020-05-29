@@ -3,7 +3,8 @@ import Login from './components/auth/Login.vue';
 
 import CustomersMain from './components/customers/Main.vue';
 import CustomersList from './components/customers/List.vue';
-// import Customer from './components/customers/View.vue';
+import Customer from './components/customers/View.vue';
+import NewsCustomer from './components/customers/New.vue';
 
 export const routes = [
   {
@@ -28,14 +29,14 @@ export const routes = [
         path: '/',
         component: CustomersList
       },
-      // {
-      //   path: 'new',
-      //   component: NewsCustomer
-      // },
-      // {
-      //   path: ':id',
-      //   component: Customer
-      // }
+      {
+        path: 'new',
+        component: NewsCustomer
+      },
+      {
+        path: ':id',
+        component: Customer
+      }
     ]
   }
 ]
